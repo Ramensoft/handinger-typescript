@@ -1,6 +1,6 @@
 import fs from 'fs';
-import type { ResponseLike } from '@ramensoft/handinger/internal/to-file';
-import { toFile } from '@ramensoft/handinger/core/uploads';
+import type { ResponseLike } from 'handinger/internal/to-file';
+import { toFile } from 'handinger/core/uploads';
 import { File } from 'node:buffer';
 
 class MyClass {
@@ -97,7 +97,7 @@ describe('missing File error message', () => {
   });
 
   test('is thrown', async () => {
-    const uploads = await import('@ramensoft/handinger/core/uploads');
+    const uploads = await import('handinger/core/uploads');
     await expect(
       uploads.toFile(mockResponse({ url: 'https://example.com/my/audio.mp3' })),
     ).rejects.toMatchInlineSnapshot(

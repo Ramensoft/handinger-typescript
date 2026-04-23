@@ -7,8 +7,8 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^@ramensoft/handinger$': '<rootDir>/src/index.ts',
-    '^@ramensoft/handinger/(.*)$': '<rootDir>/src/$1',
+    '^handinger$': '<rootDir>/src/index.ts',
+    '^handinger/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: [
     '<rootDir>/ecosystem-tests/',

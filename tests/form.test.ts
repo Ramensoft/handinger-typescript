@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from '@ramensoft/handinger/internal/uploads';
-import { toFile } from '@ramensoft/handinger/core/uploads';
+import { multipartFormRequestOptions, createForm } from 'handinger/internal/uploads';
+import { toFile } from 'handinger/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {
