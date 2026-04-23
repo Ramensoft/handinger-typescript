@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Handinger from 'handinger';
+import Handinger from '@ramensoft/handinger';
 
 const client = new Handinger({
   apiKey: 'My API Key',
