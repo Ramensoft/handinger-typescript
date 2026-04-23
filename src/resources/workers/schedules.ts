@@ -37,13 +37,13 @@ export class Schedules extends APIResource {
 }
 
 export type WorkerSchedule =
-  | WorkerSchedule.UnionMember0
-  | WorkerSchedule.UnionMember1
-  | WorkerSchedule.UnionMember2
-  | WorkerSchedule.UnionMember3;
+  | WorkerSchedule.ScheduledWorkerSchedule
+  | WorkerSchedule.DelayedWorkerSchedule
+  | WorkerSchedule.CronWorkerSchedule
+  | WorkerSchedule.IntervalWorkerSchedule;
 
 export namespace WorkerSchedule {
-  export interface UnionMember0 {
+  export interface ScheduledWorkerSchedule {
     id: string;
 
     budget: 'low' | 'standard' | 'high' | 'unlimited';
@@ -55,7 +55,7 @@ export namespace WorkerSchedule {
     type: 'scheduled';
   }
 
-  export interface UnionMember1 {
+  export interface DelayedWorkerSchedule {
     id: string;
 
     budget: 'low' | 'standard' | 'high' | 'unlimited';
@@ -69,7 +69,7 @@ export namespace WorkerSchedule {
     type: 'delayed';
   }
 
-  export interface UnionMember2 {
+  export interface CronWorkerSchedule {
     id: string;
 
     budget: 'low' | 'standard' | 'high' | 'unlimited';
@@ -83,7 +83,7 @@ export namespace WorkerSchedule {
     type: 'cron';
   }
 
-  export interface UnionMember3 {
+  export interface IntervalWorkerSchedule {
     id: string;
 
     budget: 'low' | 'standard' | 'high' | 'unlimited';
@@ -112,34 +112,34 @@ export interface ScheduleCreateParams {
   input: string;
 
   when:
-    | ScheduleCreateParams.UnionMember0
-    | ScheduleCreateParams.UnionMember1
-    | ScheduleCreateParams.UnionMember2
-    | ScheduleCreateParams.UnionMember3;
+    | ScheduleCreateParams.ScheduledWhen
+    | ScheduleCreateParams.DelayedWhen
+    | ScheduleCreateParams.CronWhen
+    | ScheduleCreateParams.IntervalWhen;
 
   budget?: 'low' | 'standard' | 'high' | 'unlimited';
 }
 
 export namespace ScheduleCreateParams {
-  export interface UnionMember0 {
+  export interface ScheduledWhen {
     date: string;
 
     type: 'scheduled';
   }
 
-  export interface UnionMember1 {
+  export interface DelayedWhen {
     delayInSeconds: number;
 
     type: 'delayed';
   }
 
-  export interface UnionMember2 {
+  export interface CronWhen {
     cron: string;
 
     type: 'cron';
   }
 
-  export interface UnionMember3 {
+  export interface IntervalWhen {
     intervalSeconds: number;
 
     type: 'interval';
