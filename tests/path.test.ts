@@ -1,4 +1,4 @@
-import { createPathTagFunction, encodeURIPath } from 'handinger/internal/utils/path';
+import { createPathTagFunction, encodeURIPath } from '@ramensoft/handinger/internal/utils/path';
 import { inspect } from 'node:util';
 import { runInNewContext } from 'node:vm';
 

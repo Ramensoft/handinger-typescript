@@ -55,12 +55,12 @@ $ cd handinger-typescript
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link handinger
+$ yarn link @ramensoft/handinger
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link --global handinger
+$ pnpm link --global @ramensoft/handinger
 ```
 
 ## Running tests
