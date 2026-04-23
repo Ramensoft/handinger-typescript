@@ -235,6 +235,8 @@ export namespace Worker {
     totalTokens: number;
 
     credits?: number;
+
+    durationMs?: number;
   }
 }
 
