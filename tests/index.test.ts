@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from '@ramensoft/handinger/core/api-promise';
+import { APIPromise } from 'handinger/core/api-promise';
 
 import util from 'node:util';
-import Handinger from '@ramensoft/handinger';
-import { APIUserAbortError } from '@ramensoft/handinger';
+import Handinger from 'handinger';
+import { APIUserAbortError } from 'handinger';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {

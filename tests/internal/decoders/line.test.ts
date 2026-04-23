@@ -1,4 +1,4 @@
-import { findDoubleNewlineIndex, LineDecoder } from '@ramensoft/handinger/internal/decoders/line';
+import { findDoubleNewlineIndex, LineDecoder } from 'handinger/internal/decoders/line';
 
 function decodeChunks(chunks: string[], { flush }: { flush: boolean } = { flush: false }): string[] {
   const decoder = new LineDecoder();

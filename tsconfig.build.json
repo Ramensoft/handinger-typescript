@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "@ramensoft/handinger/*": ["./dist/src/*"],
-      "@ramensoft/handinger": ["./dist/src/index.ts"]
+      "handinger/*": ["./dist/src/*"],
+      "handinger": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

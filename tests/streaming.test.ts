@@ -1,6 +1,6 @@
 import assert from 'assert';
-import { _iterSSEMessages } from '@ramensoft/handinger/core/streaming';
-import { ReadableStreamFrom } from '@ramensoft/handinger/internal/shims';
+import { _iterSSEMessages } from 'handinger/core/streaming';
+import { ReadableStreamFrom } from 'handinger/internal/shims';
 
 describe('streaming decoding', () => {
   test('basic', async () => {
