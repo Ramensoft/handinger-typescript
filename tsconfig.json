@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "handinger/*": ["./src/*"],
-      "handinger": ["./src/index.ts"]
+      "@ramensoft/handinger/*": ["./src/*"],
+      "@ramensoft/handinger": ["./src/index.ts"]
     },
     "noEmit": true,
 
