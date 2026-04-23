@@ -26,7 +26,7 @@ const client = new Handinger({
   apiKey: process.env['HANDINGER_API_KEY'], // This is the default and can be omitted
 });
 
-const worker = await client.workers.create({ input: 'x' });
+const worker = await client.workers.create({ input: "What's the weather today in Barcelona?" });
 
 console.log(worker.id);
 ```
@@ -43,7 +43,7 @@ const client = new Handinger({
   apiKey: process.env['HANDINGER_API_KEY'], // This is the default and can be omitted
 });
 
-const params: Handinger.WorkerCreateParams = { input: 'x' };
+const params: Handinger.WorkerCreateParams = { input: "What's the weather today in Barcelona?" };
 const worker: Handinger.Worker = await client.workers.create(params);
 ```
 
@@ -57,15 +57,17 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const worker = await client.workers.create({ input: 'x' }).catch(async (err) => {
-  if (err instanceof Handinger.APIError) {
-    console.log(err.status); // 400
-    console.log(err.name); // BadRequestError
-    console.log(err.headers); // {server: 'nginx', ...}
-  } else {
-    throw err;
-  }
-});
+const worker = await client.workers
+  .create({ input: "What's the weather today in Barcelona?" })
+  .catch(async (err) => {
+    if (err instanceof Handinger.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 ```
 
 Error codes are as follows:
@@ -97,7 +99,7 @@ const client = new Handinger({
 });
 
 // Or, configure per-request:
-await client.workers.create({ input: 'x' }, {
+await client.workers.create({ input: 'What\'s the weather today in Barcelona?' }, {
   maxRetries: 5,
 });
 ```
@@ -114,7 +116,7 @@ const client = new Handinger({
 });
 
 // Override per-request:
-await client.workers.create({ input: 'x' }, {
+await client.workers.create({ input: 'What\'s the weather today in Barcelona?' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -137,11 +139,15 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Handinger();
 
-const response = await client.workers.create({ input: 'x' }).asResponse();
+const response = await client.workers
+  .create({ input: "What's the weather today in Barcelona?" })
+  .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: worker, response: raw } = await client.workers.create({ input: 'x' }).withResponse();
+const { data: worker, response: raw } = await client.workers
+  .create({ input: "What's the weather today in Barcelona?" })
+  .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(worker.id);
 ```
