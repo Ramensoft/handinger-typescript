@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Handinger from 'handinger';
+import Handinger from '@ramensoft/handinger';
 
 const client = new Handinger({
   apiKey: 'My API Key',
@@ -10,7 +10,7 @@ const client = new Handinger({
 describe('resource workers', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.workers.create({ input: 'x' });
+    const responsePromise = client.workers.create({ input: "What's the weather today in Barcelona?" });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,7 +23,7 @@ describe('resource workers', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.workers.create({
-      input: 'x',
+      input: "What's the weather today in Barcelona?",
       budget: 'low',
       stream: true,
     });
@@ -55,7 +55,9 @@ describe('resource workers', () => {
 
   // Mock server tests are disabled
   test.skip('continue: only required params', async () => {
-    const responsePromise = client.workers.continue('t_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM', { input: 'x' });
+    const responsePromise = client.workers.continue('t_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM', {
+      input: "What's the weather today in Barcelona?",
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -68,7 +70,7 @@ describe('resource workers', () => {
   // Mock server tests are disabled
   test.skip('continue: required and optional params', async () => {
     const response = await client.workers.continue('t_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM', {
-      input: 'x',
+      input: "What's the weather today in Barcelona?",
       budget: 'low',
       stream: true,
     });

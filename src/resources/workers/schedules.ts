@@ -11,6 +11,21 @@ import { path } from '../../internal/utils/path';
 export class Schedules extends APIResource {
   /**
    * Schedule a worker instruction for a future or recurring run.
+   *
+   * @example
+   * ```ts
+   * const workerSchedule =
+   *   await client.workers.schedules.create(
+   *     't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
+   *     {
+   *       input: 'x',
+   *       when: {
+   *         date: '2019-12-27T18:11:19.117Z',
+   *         type: 'scheduled',
+   *       },
+   *     },
+   *   );
+   * ```
    */
   create(workerID: string, body: ScheduleCreateParams, options?: RequestOptions): APIPromise<WorkerSchedule> {
     return this._client.post(path`/api/workers/${workerID}/schedules`, { body, ...options });
@@ -18,6 +33,13 @@ export class Schedules extends APIResource {
 
   /**
    * List scheduled tasks for a worker.
+   *
+   * @example
+   * ```ts
+   * const schedules = await client.workers.schedules.list(
+   *   't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
+   * );
+   * ```
    */
   list(workerID: string, options?: RequestOptions): APIPromise<ScheduleListResponse> {
     return this._client.get(path`/api/workers/${workerID}/schedules`, options);
@@ -25,6 +47,14 @@ export class Schedules extends APIResource {
 
   /**
    * Cancel a scheduled task for a worker.
+   *
+   * @example
+   * ```ts
+   * const response = await client.workers.schedules.cancel(
+   *   'sch_01HZY31W2SZJ8MJ2FQTR3M1K9D',
+   *   { workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM' },
+   * );
+   * ```
    */
   cancel(
     scheduleID: string,
@@ -37,13 +67,13 @@ export class Schedules extends APIResource {
 }
 
 export type WorkerSchedule =
-  | WorkerSchedule.UnionMember0
-  | WorkerSchedule.UnionMember1
-  | WorkerSchedule.UnionMember2
-  | WorkerSchedule.UnionMember3;
+  | WorkerSchedule.ScheduledWorkerSchedule
+  | WorkerSchedule.DelayedWorkerSchedule
+  | WorkerSchedule.CronWorkerSchedule
+  | WorkerSchedule.IntervalWorkerSchedule;
 
 export namespace WorkerSchedule {
-  export interface UnionMember0 {
+  export interface ScheduledWorkerSchedule {
     id: string;
 
     budget: 'low' | 'standard' | 'high' | 'unlimited';
@@ -55,7 +85,7 @@ export namespace WorkerSchedule {
     type: 'scheduled';
   }
 
-  export interface UnionMember1 {
+  export interface DelayedWorkerSchedule {
     id: string;
 
     budget: 'low' | 'standard' | 'high' | 'unlimited';
@@ -69,7 +99,7 @@ export namespace WorkerSchedule {
     type: 'delayed';
   }
 
-  export interface UnionMember2 {
+  export interface CronWorkerSchedule {
     id: string;
 
     budget: 'low' | 'standard' | 'high' | 'unlimited';
@@ -83,7 +113,7 @@ export namespace WorkerSchedule {
     type: 'cron';
   }
 
-  export interface UnionMember3 {
+  export interface IntervalWorkerSchedule {
     id: string;
 
     budget: 'low' | 'standard' | 'high' | 'unlimited';
@@ -112,34 +142,34 @@ export interface ScheduleCreateParams {
   input: string;
 
   when:
-    | ScheduleCreateParams.UnionMember0
-    | ScheduleCreateParams.UnionMember1
-    | ScheduleCreateParams.UnionMember2
-    | ScheduleCreateParams.UnionMember3;
+    | ScheduleCreateParams.ScheduledWhen
+    | ScheduleCreateParams.DelayedWhen
+    | ScheduleCreateParams.CronWhen
+    | ScheduleCreateParams.IntervalWhen;
 
   budget?: 'low' | 'standard' | 'high' | 'unlimited';
 }
 
 export namespace ScheduleCreateParams {
-  export interface UnionMember0 {
+  export interface ScheduledWhen {
     date: string;
 
     type: 'scheduled';
   }
 
-  export interface UnionMember1 {
+  export interface DelayedWhen {
     delayInSeconds: number;
 
     type: 'delayed';
   }
 
-  export interface UnionMember2 {
+  export interface CronWhen {
     cron: string;
 
     type: 'cron';
   }
 
-  export interface UnionMember3 {
+  export interface IntervalWhen {
     intervalSeconds: number;
 
     type: 'interval';
