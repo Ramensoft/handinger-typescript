@@ -11,6 +11,21 @@ import { path } from '../../internal/utils/path';
 export class Schedules extends APIResource {
   /**
    * Schedule a worker instruction for a future or recurring run.
+   *
+   * @example
+   * ```ts
+   * const workerSchedule =
+   *   await client.workers.schedules.create(
+   *     't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
+   *     {
+   *       input: 'x',
+   *       when: {
+   *         date: '2019-12-27T18:11:19.117Z',
+   *         type: 'scheduled',
+   *       },
+   *     },
+   *   );
+   * ```
    */
   create(workerID: string, body: ScheduleCreateParams, options?: RequestOptions): APIPromise<WorkerSchedule> {
     return this._client.post(path`/api/workers/${workerID}/schedules`, { body, ...options });
@@ -18,6 +33,13 @@ export class Schedules extends APIResource {
 
   /**
    * List scheduled tasks for a worker.
+   *
+   * @example
+   * ```ts
+   * const schedules = await client.workers.schedules.list(
+   *   't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
+   * );
+   * ```
    */
   list(workerID: string, options?: RequestOptions): APIPromise<ScheduleListResponse> {
     return this._client.get(path`/api/workers/${workerID}/schedules`, options);
@@ -25,6 +47,14 @@ export class Schedules extends APIResource {
 
   /**
    * Cancel a scheduled task for a worker.
+   *
+   * @example
+   * ```ts
+   * const response = await client.workers.schedules.cancel(
+   *   'sch_01HZY31W2SZJ8MJ2FQTR3M1K9D',
+   *   { workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM' },
+   * );
+   * ```
    */
   cancel(
     scheduleID: string,
