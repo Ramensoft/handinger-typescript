@@ -24,8 +24,6 @@ import {
   WorkerCreateParams,
   WorkerRetrieveEmailResponse,
   WorkerRetrieveFileParams,
-  WorkerRetrieveParams,
-  WorkerStreamUpdatesResponse,
   Workers,
 } from './resources/workers/workers';
 import { type Fetch } from './internal/builtin-types';
@@ -741,9 +739,7 @@ export declare namespace Handinger {
     type CreateWorker as CreateWorker,
     type Worker as Worker,
     type WorkerRetrieveEmailResponse as WorkerRetrieveEmailResponse,
-    type WorkerStreamUpdatesResponse as WorkerStreamUpdatesResponse,
     type WorkerCreateParams as WorkerCreateParams,
-    type WorkerRetrieveParams as WorkerRetrieveParams,
     type WorkerContinueParams as WorkerContinueParams,
     type WorkerRetrieveFileParams as WorkerRetrieveFileParams,
   };

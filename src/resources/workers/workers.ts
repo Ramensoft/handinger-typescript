@@ -11,7 +11,6 @@ import {
   WorkerSchedule,
 } from './schedules';
 import { APIPromise } from '../../core/api-promise';
-import { Stream } from '../../core/streaming';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -34,8 +33,7 @@ export class Workers extends APIResource {
   }
 
   /**
-   * Retrieve the current worker state. Pass stream=true or request text/event-stream
-   * to subscribe to updates.
+   * Retrieve the current worker state and messages.
    *
    * @example
    * ```ts
@@ -44,12 +42,8 @@ export class Workers extends APIResource {
    * );
    * ```
    */
-  retrieve(
-    workerID: string,
-    query: WorkerRetrieveParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<Worker> {
-    return this._client.get(path`/api/workers/${workerID}`, { query, ...options });
+  retrieve(workerID: string, options?: RequestOptions): APIPromise<Worker> {
+    return this._client.get(path`/api/workers/${workerID}`, options);
   }
 
   /**
@@ -108,24 +102,6 @@ export class Workers extends APIResource {
       __binaryResponse: true,
     });
   }
-
-  /**
-   * Subscribe to a worker using server-sent events.
-   *
-   * @example
-   * ```ts
-   * const response = await client.workers.streamUpdates(
-   *   't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
-   * );
-   * ```
-   */
-  streamUpdates(workerID: string, options?: RequestOptions): APIPromise<Stream<WorkerStreamUpdatesResponse>> {
-    return this._client.get(path`/api/workers/${workerID}/stream`, {
-      ...options,
-      headers: buildHeaders([{ Accept: 'text/event-stream' }, options?.headers]),
-      stream: true,
-    }) as APIPromise<Stream<WorkerStreamUpdatesResponse>>;
-  }
 }
 
 export interface CreateWorker {
@@ -162,8 +138,6 @@ export interface Worker {
   sources: Array<Worker.Source>;
 
   status: 'running' | 'completed' | 'pending';
-
-  costs?: Worker.Costs | null;
 
   usage?: Worker.Usage;
 }
@@ -207,33 +181,7 @@ export namespace Worker {
     url: string;
   }
 
-  export interface Costs {
-    internalCostUsd: number;
-
-    modelCostUsd: number;
-
-    sandboxCostUsd: number;
-
-    toolCostUsd: number;
-  }
-
   export interface Usage {
-    cacheReadTokens: number;
-
-    cacheWriteTokens: number;
-
-    costUsd: number;
-
-    inputTokens: number;
-
-    outputTokens: number;
-
-    reasoningTokens: number;
-
-    steps: number;
-
-    totalTokens: number;
-
     credits?: number;
 
     durationMs?: number;
@@ -242,20 +190,11 @@ export namespace Worker {
 
 export type WorkerRetrieveEmailResponse = string;
 
-export type WorkerStreamUpdatesResponse = string;
-
 export interface WorkerCreateParams {
   input: string;
 
   budget?: 'low' | 'standard' | 'high' | 'unlimited';
 
-  stream?: boolean;
-}
-
-export interface WorkerRetrieveParams {
-  /**
-   * Return a server-sent event stream instead of JSON.
-   */
   stream?: boolean;
 }
 
@@ -281,9 +220,7 @@ export declare namespace Workers {
     type CreateWorker as CreateWorker,
     type Worker as Worker,
     type WorkerRetrieveEmailResponse as WorkerRetrieveEmailResponse,
-    type WorkerStreamUpdatesResponse as WorkerStreamUpdatesResponse,
     type WorkerCreateParams as WorkerCreateParams,
-    type WorkerRetrieveParams as WorkerRetrieveParams,
     type WorkerContinueParams as WorkerContinueParams,
     type WorkerRetrieveFileParams as WorkerRetrieveFileParams,
   };
