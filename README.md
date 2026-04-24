@@ -1,6 +1,6 @@
 # Handinger TypeScript API Library
 
-[![NPM version](<https://img.shields.io/npm/v/handinger.svg?label=npm%20(stable)>)](https://npmjs.org/package/handinger) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/handinger)
+[![NPM version](<https://img.shields.io/npm/v/@ramensoft/handinger.svg?label=npm%20(stable)>)](https://npmjs.org/package/@ramensoft/handinger) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/handinger)
 
 This library provides convenient access to the Handinger REST API from server-side TypeScript or JavaScript.
 
