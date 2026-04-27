@@ -23,7 +23,7 @@ import {
   WorkerContinueParams,
   WorkerCreateParams,
   WorkerRetrieveEmailResponse,
-  WorkerRetrieveFileParams,
+  WorkerRetrieveParams,
   Workers,
 } from './resources/workers/workers';
 import { type Fetch } from './internal/builtin-types';
@@ -726,6 +726,9 @@ export class Handinger {
 
   static toFile = Uploads.toFile;
 
+  /**
+   * Create, retrieve, and continue agent workers.
+   */
   workers: API.Workers = new API.Workers(this);
 }
 
@@ -740,7 +743,7 @@ export declare namespace Handinger {
     type Worker as Worker,
     type WorkerRetrieveEmailResponse as WorkerRetrieveEmailResponse,
     type WorkerCreateParams as WorkerCreateParams,
+    type WorkerRetrieveParams as WorkerRetrieveParams,
     type WorkerContinueParams as WorkerContinueParams,
-    type WorkerRetrieveFileParams as WorkerRetrieveFileParams,
   };
 }

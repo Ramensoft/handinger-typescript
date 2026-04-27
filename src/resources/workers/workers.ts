@@ -11,15 +11,20 @@ import {
   WorkerSchedule,
 } from './schedules';
 import { APIPromise } from '../../core/api-promise';
-import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
+import { maybeMultipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Create, retrieve, and continue agent workers.
+ */
 export class Workers extends APIResource {
   schedules: SchedulesAPI.Schedules = new SchedulesAPI.Schedules(this._client);
 
   /**
-   * Create a new agent worker and start it with the supplied instruction.
+   * Create a new agent worker and start it with the supplied instruction. Send
+   * `multipart/form-data` to attach files alongside the instruction; the bytes are
+   * bootstrapped into the worker's workspace before the first turn.
    *
    * @example
    * ```ts
@@ -29,11 +34,15 @@ export class Workers extends APIResource {
    * ```
    */
   create(body: WorkerCreateParams, options?: RequestOptions): APIPromise<Worker> {
-    return this._client.post('/api/workers', { body, ...options });
+    return this._client.post(
+      '/api/workers',
+      maybeMultipartFormRequestOptions({ body, ...options }, this._client),
+    );
   }
 
   /**
-   * Retrieve the current worker state and messages.
+   * Retrieve the current worker state and messages. Returns a JSON worker object by
+   * default, or a server-sent event stream when `stream=true`.
    *
    * @example
    * ```ts
@@ -42,12 +51,18 @@ export class Workers extends APIResource {
    * );
    * ```
    */
-  retrieve(workerID: string, options?: RequestOptions): APIPromise<Worker> {
-    return this._client.get(path`/api/workers/${workerID}`, options);
+  retrieve(
+    workerID: string,
+    query: WorkerRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<Worker> {
+    return this._client.get(path`/api/workers/${workerID}`, { query, ...options });
   }
 
   /**
-   * Send another instruction to an existing worker.
+   * Send another instruction to an existing worker. Send `multipart/form-data` to
+   * attach additional files; the bytes are bootstrapped into the worker's workspace
+   * before the next turn.
    *
    * @example
    * ```ts
@@ -58,7 +73,10 @@ export class Workers extends APIResource {
    * ```
    */
   continue(workerID: string, body: WorkerContinueParams, options?: RequestOptions): APIPromise<Worker> {
-    return this._client.post(path`/api/workers/${workerID}`, { body, ...options });
+    return this._client.post(
+      path`/api/workers/${workerID}`,
+      maybeMultipartFormRequestOptions({ body, ...options }, this._client),
+    );
   }
 
   /**
@@ -73,34 +91,6 @@ export class Workers extends APIResource {
    */
   retrieveEmail(workerID: string, options?: RequestOptions): APIPromise<string> {
     return this._client.get(path`/api/workers/${workerID}/email`, options);
-  }
-
-  /**
-   * Retrieve a file published from a worker workspace. The runtime route accepts
-   * nested paths after /files/.
-   *
-   * @example
-   * ```ts
-   * const response = await client.workers.retrieveFile(
-   *   'scratchpad/plan.md',
-   *   { workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM' },
-   * );
-   *
-   * const content = await response.blob();
-   * console.log(content);
-   * ```
-   */
-  retrieveFile(
-    filePath: string,
-    params: WorkerRetrieveFileParams,
-    options?: RequestOptions,
-  ): APIPromise<Response> {
-    const { workerId } = params;
-    return this._client.get(path`/api/workers/${workerId}/files/${filePath}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: 'application/octet-stream' }, options?.headers]),
-      __binaryResponse: true,
-    });
   }
 }
 
@@ -198,19 +188,21 @@ export interface WorkerCreateParams {
   stream?: boolean;
 }
 
+export interface WorkerRetrieveParams {
+  /**
+   * Set to "true" to receive a server-sent event stream that replays all stored
+   * messages and then continues with live chunks from the active turn (if any)
+   * before closing.
+   */
+  stream?: 'true' | 'false';
+}
+
 export interface WorkerContinueParams {
   input: string;
 
   budget?: 'low' | 'standard' | 'high' | 'unlimited';
 
   stream?: boolean;
-}
-
-export interface WorkerRetrieveFileParams {
-  /**
-   * Worker id returned by the create worker endpoint.
-   */
-  workerId: string;
 }
 
 Workers.Schedules = Schedules;
@@ -221,8 +213,8 @@ export declare namespace Workers {
     type Worker as Worker,
     type WorkerRetrieveEmailResponse as WorkerRetrieveEmailResponse,
     type WorkerCreateParams as WorkerCreateParams,
+    type WorkerRetrieveParams as WorkerRetrieveParams,
     type WorkerContinueParams as WorkerContinueParams,
-    type WorkerRetrieveFileParams as WorkerRetrieveFileParams,
   };
 
   export {

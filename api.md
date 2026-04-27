@@ -9,10 +9,9 @@ Types:
 Methods:
 
 - <code title="post /api/workers">client.workers.<a href="./src/resources/workers/workers.ts">create</a>({ ...params }) -> Worker</code>
-- <code title="get /api/workers/{workerId}">client.workers.<a href="./src/resources/workers/workers.ts">retrieve</a>(workerID) -> Worker</code>
+- <code title="get /api/workers/{workerId}">client.workers.<a href="./src/resources/workers/workers.ts">retrieve</a>(workerID, { ...params }) -> Worker</code>
 - <code title="post /api/workers/{workerId}">client.workers.<a href="./src/resources/workers/workers.ts">continue</a>(workerID, { ...params }) -> Worker</code>
 - <code title="get /api/workers/{workerId}/email">client.workers.<a href="./src/resources/workers/workers.ts">retrieveEmail</a>(workerID) -> string</code>
-- <code title="get /api/workers/{workerId}/files/{filePath}">client.workers.<a href="./src/resources/workers/workers.ts">retrieveFile</a>(filePath, { ...params }) -> Response</code>
 
 ## Schedules
 
