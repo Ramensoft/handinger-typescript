@@ -14,6 +14,6 @@ export {
   type Worker,
   type WorkerRetrieveEmailResponse,
   type WorkerCreateParams,
+  type WorkerRetrieveParams,
   type WorkerContinueParams,
-  type WorkerRetrieveFileParams,
 } from './workers';

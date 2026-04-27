@@ -42,6 +42,18 @@ describe('resource workers', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.workers.retrieve(
+        't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
+        { stream: 'true' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Handinger.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('continue: only required params', async () => {
     const responsePromise = client.workers.continue('t_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM', {
       input: "What's the weather today in Barcelona?",
@@ -74,12 +86,5 @@ describe('resource workers', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('retrieveFile: required and optional params', async () => {
-    const response = await client.workers.retrieveFile('scratchpad/plan.md', {
-      workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
-    });
   });
 });
