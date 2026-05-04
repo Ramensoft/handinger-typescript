@@ -17,11 +17,12 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
+import { CreateTask, Task, TaskCreateParams, TaskWithTurns, Tasks } from './resources/tasks';
 import {
   CreateWorker,
   Worker,
-  WorkerContinueParams,
   WorkerCreateParams,
+  WorkerCreateResponse,
   WorkerRetrieveEmailResponse,
   WorkerRetrieveParams,
   Workers,
@@ -739,12 +740,17 @@ export class Handinger {
   static toFile = Uploads.toFile;
 
   /**
-   * Create, retrieve, and continue agent workers.
+   * Create, retrieve, and manage agent worker templates.
    */
   workers: API.Workers = new API.Workers(this);
+  /**
+   * Run and inspect tasks against a worker.
+   */
+  tasks: API.Tasks = new API.Tasks(this);
 }
 
 Handinger.Workers = Workers;
+Handinger.Tasks = Tasks;
 
 export declare namespace Handinger {
   export type RequestOptions = Opts.RequestOptions;
@@ -753,9 +759,17 @@ export declare namespace Handinger {
     Workers as Workers,
     type CreateWorker as CreateWorker,
     type Worker as Worker,
+    type WorkerCreateResponse as WorkerCreateResponse,
     type WorkerRetrieveEmailResponse as WorkerRetrieveEmailResponse,
     type WorkerCreateParams as WorkerCreateParams,
     type WorkerRetrieveParams as WorkerRetrieveParams,
-    type WorkerContinueParams as WorkerContinueParams,
+  };
+
+  export {
+    Tasks as Tasks,
+    type CreateTask as CreateTask,
+    type Task as Task,
+    type TaskWithTurns as TaskWithTurns,
+    type TaskCreateParams as TaskCreateParams,
   };
 }

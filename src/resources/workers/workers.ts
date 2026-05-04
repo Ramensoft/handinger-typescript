@@ -12,37 +12,33 @@ import {
 } from './schedules';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
-import { maybeMultipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
 
 /**
- * Create, retrieve, and continue agent workers.
+ * Create, retrieve, and manage agent worker templates.
  */
 export class Workers extends APIResource {
   schedules: SchedulesAPI.Schedules = new SchedulesAPI.Schedules(this._client);
 
   /**
-   * Create a new agent worker and start it with the supplied instruction. Send
-   * `multipart/form-data` to attach files alongside the instruction; the bytes are
-   * bootstrapped into the worker's workspace before the first turn.
+   * Create a new worker. The worker is a reusable agent template; tasks are runs
+   * against this template. Use `POST /tasks` to actually run the agent.
    *
    * @example
    * ```ts
    * const worker = await client.workers.create({
-   *   input: "What's the weather today in Barcelona?",
+   *   title: 'Brand voice analyzer',
    * });
    * ```
    */
-  create(body: WorkerCreateParams, options?: RequestOptions): APIPromise<Worker> {
-    return this._client.post(
-      '/api/workers',
-      maybeMultipartFormRequestOptions({ body, ...options }, this._client),
-    );
+  create(body: WorkerCreateParams, options?: RequestOptions): APIPromise<WorkerCreateResponse> {
+    return this._client.post('/api/workers', { body, ...options });
   }
 
   /**
-   * Retrieve the current worker state and messages. Returns a JSON worker object by
-   * default, or a server-sent event stream when `stream=true`.
+   * Retrieve the current worker state and messages from its most recent task.
+   * Returns a JSON worker object by default, or a server-sent event stream when
+   * `stream=true`.
    *
    * @example
    * ```ts
@@ -57,26 +53,6 @@ export class Workers extends APIResource {
     options?: RequestOptions,
   ): APIPromise<Worker> {
     return this._client.get(path`/api/workers/${workerID}`, { query, ...options });
-  }
-
-  /**
-   * Send another instruction to an existing worker. Send `multipart/form-data` to
-   * attach additional files; the bytes are bootstrapped into the worker's workspace
-   * before the next turn.
-   *
-   * @example
-   * ```ts
-   * const worker = await client.workers.continue(
-   *   't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
-   *   { input: "What's the weather today in Barcelona?" },
-   * );
-   * ```
-   */
-  continue(workerID: string, body: WorkerContinueParams, options?: RequestOptions): APIPromise<Worker> {
-    return this._client.post(
-      path`/api/workers/${workerID}`,
-      maybeMultipartFormRequestOptions({ body, ...options }, this._client),
-    );
   }
 
   /**
@@ -95,11 +71,18 @@ export class Workers extends APIResource {
 }
 
 export interface CreateWorker {
-  input: string;
+  title: string;
 
-  budget?: 'low' | 'standard' | 'high' | 'unlimited';
+  /**
+   * Persistent system prompt the worker uses for every task it runs.
+   */
+  instructions?: string;
 
-  stream?: boolean;
+  /**
+   * `public` (default) is visible to all org members. `private` is only visible to
+   * invited members.
+   */
+  visibility?: 'public' | 'private';
 }
 
 export interface Worker {
@@ -178,31 +161,48 @@ export namespace Worker {
   }
 }
 
+export interface WorkerCreateResponse {
+  id: string;
+
+  createdAt: string | null;
+
+  instructions: string;
+
+  organizationId: string;
+
+  title: string;
+
+  updatedAt: string | null;
+
+  userId: string;
+
+  visibility: 'public' | 'private';
+}
+
 export type WorkerRetrieveEmailResponse = string;
 
 export interface WorkerCreateParams {
-  input: string;
+  title: string;
 
-  budget?: 'low' | 'standard' | 'high' | 'unlimited';
+  /**
+   * Persistent system prompt the worker uses for every task it runs.
+   */
+  instructions?: string;
 
-  stream?: boolean;
+  /**
+   * `public` (default) is visible to all org members. `private` is only visible to
+   * invited members.
+   */
+  visibility?: 'public' | 'private';
 }
 
 export interface WorkerRetrieveParams {
   /**
    * Set to "true" to receive a server-sent event stream that replays all stored
-   * messages and then continues with live chunks from the active turn (if any)
+   * messages and then continues with live chunks from the active task (if any)
    * before closing.
    */
   stream?: 'true' | 'false';
-}
-
-export interface WorkerContinueParams {
-  input: string;
-
-  budget?: 'low' | 'standard' | 'high' | 'unlimited';
-
-  stream?: boolean;
 }
 
 Workers.Schedules = Schedules;
@@ -211,10 +211,10 @@ export declare namespace Workers {
   export {
     type CreateWorker as CreateWorker,
     type Worker as Worker,
+    type WorkerCreateResponse as WorkerCreateResponse,
     type WorkerRetrieveEmailResponse as WorkerRetrieveEmailResponse,
     type WorkerCreateParams as WorkerCreateParams,
     type WorkerRetrieveParams as WorkerRetrieveParams,
-    type WorkerContinueParams as WorkerContinueParams,
   };
 
   export {

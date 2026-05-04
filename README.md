@@ -26,7 +26,10 @@ const client = new Handinger({
   apiKey: process.env['HANDINGER_API_KEY'], // This is the default and can be omitted
 });
 
-const worker = await client.workers.create({ input: "What's the weather today in Barcelona?" });
+const worker = await client.tasks.create({
+  title: 'Brand voice analyzer',
+  workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
+});
 
 console.log(worker.id);
 ```
@@ -43,8 +46,11 @@ const client = new Handinger({
   apiKey: process.env['HANDINGER_API_KEY'], // This is the default and can be omitted
 });
 
-const params: Handinger.WorkerCreateParams = { input: "What's the weather today in Barcelona?" };
-const worker: Handinger.Worker = await client.workers.create(params);
+const params: Handinger.TaskCreateParams = {
+  title: 'Brand voice analyzer',
+  workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
+};
+const worker: Handinger.Worker = await client.tasks.create(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -57,8 +63,8 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const worker = await client.workers
-  .create({ input: "What's the weather today in Barcelona?" })
+const worker = await client.tasks
+  .create({ title: 'Brand voice analyzer', workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM' })
   .catch(async (err) => {
     if (err instanceof Handinger.APIError) {
       console.log(err.status); // 400
@@ -99,7 +105,7 @@ const client = new Handinger({
 });
 
 // Or, configure per-request:
-await client.workers.create({ input: 'What\'s the weather today in Barcelona?' }, {
+await client.tasks.create({ title: 'Brand voice analyzer', workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM' }, {
   maxRetries: 5,
 });
 ```
@@ -116,7 +122,7 @@ const client = new Handinger({
 });
 
 // Override per-request:
-await client.workers.create({ input: 'What\'s the weather today in Barcelona?' }, {
+await client.tasks.create({ title: 'Brand voice analyzer', workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -139,14 +145,14 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Handinger();
 
-const response = await client.workers
-  .create({ input: "What's the weather today in Barcelona?" })
+const response = await client.tasks
+  .create({ title: 'Brand voice analyzer', workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM' })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: worker, response: raw } = await client.workers
-  .create({ input: "What's the weather today in Barcelona?" })
+const { data: worker, response: raw } = await client.tasks
+  .create({ title: 'Brand voice analyzer', workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(worker.id);
@@ -229,7 +235,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.workers.create({
+client.tasks.create({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',

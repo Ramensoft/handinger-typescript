@@ -12,8 +12,8 @@ export {
   Workers,
   type CreateWorker,
   type Worker,
+  type WorkerCreateResponse,
   type WorkerRetrieveEmailResponse,
   type WorkerCreateParams,
   type WorkerRetrieveParams,
-  type WorkerContinueParams,
 } from './workers';
