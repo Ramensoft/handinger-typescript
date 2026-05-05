@@ -135,6 +135,12 @@ export interface TaskCreateParams {
   instructions?: string;
 
   /**
+   * Natural-language description of the worker to use for AI-generated instructions
+   * when `instructions` is omitted.
+   */
+  prompt?: string;
+
+  /**
    * `public` (default) is visible to all org members. `private` is only visible to
    * invited members.
    */

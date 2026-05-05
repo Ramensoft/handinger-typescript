@@ -29,6 +29,7 @@ describe('resource tasks', () => {
       title: 'Brand voice analyzer',
       workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
       instructions: 'instructions',
+      prompt: 'prompt',
       visibility: 'public',
     });
   });

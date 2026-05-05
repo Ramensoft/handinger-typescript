@@ -79,6 +79,12 @@ export interface CreateWorker {
   instructions?: string;
 
   /**
+   * Natural-language description of the worker to use for AI-generated instructions
+   * when `instructions` is omitted.
+   */
+  prompt?: string;
+
+  /**
    * `public` (default) is visible to all org members. `private` is only visible to
    * invited members.
    */
@@ -188,6 +194,12 @@ export interface WorkerCreateParams {
    * Persistent system prompt the worker uses for every task it runs.
    */
   instructions?: string;
+
+  /**
+   * Natural-language description of the worker to use for AI-generated instructions
+   * when `instructions` is omitted.
+   */
+  prompt?: string;
 
   /**
    * `public` (default) is visible to all org members. `private` is only visible to

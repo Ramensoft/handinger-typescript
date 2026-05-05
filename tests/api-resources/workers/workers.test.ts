@@ -25,6 +25,7 @@ describe('resource workers', () => {
     const response = await client.workers.create({
       title: 'Brand voice analyzer',
       instructions: 'instructions',
+      prompt: 'prompt',
       visibility: 'public',
     });
   });
