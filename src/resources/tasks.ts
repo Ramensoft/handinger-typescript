@@ -19,7 +19,6 @@ export class Tasks extends APIResource {
    * @example
    * ```ts
    * const worker = await client.tasks.create({
-   *   title: 'Brand voice analyzer',
    *   workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
    * });
    * ```
@@ -122,8 +121,6 @@ export namespace TaskWithTurns {
 }
 
 export interface TaskCreateParams {
-  title: string;
-
   /**
    * Worker id the task belongs to.
    */
@@ -139,6 +136,11 @@ export interface TaskCreateParams {
    * when `instructions` is omitted.
    */
   prompt?: string;
+
+  /**
+   * Optional display name. When omitted, Handinger assigns a random dog-themed name.
+   */
+  title?: string;
 
   /**
    * `public` (default) is visible to all org members. `private` is only visible to

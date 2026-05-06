@@ -10,10 +10,7 @@ const client = new Handinger({
 describe('resource tasks', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.tasks.create({
-      title: 'Brand voice analyzer',
-      workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
-    });
+    const responsePromise = client.tasks.create({ workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -26,10 +23,10 @@ describe('resource tasks', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.tasks.create({
-      title: 'Brand voice analyzer',
       workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
       instructions: 'instructions',
       prompt: 'prompt',
+      title: 'Brand voice analyzer',
       visibility: 'public',
     });
   });

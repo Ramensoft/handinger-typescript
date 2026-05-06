@@ -9,8 +9,8 @@ const client = new Handinger({
 
 describe('resource workers', () => {
   // Mock server tests are disabled
-  test.skip('create: only required params', async () => {
-    const responsePromise = client.workers.create({ title: 'Brand voice analyzer' });
+  test.skip('create', async () => {
+    const responsePromise = client.workers.create({});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -18,16 +18,6 @@ describe('resource workers', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('create: required and optional params', async () => {
-    const response = await client.workers.create({
-      title: 'Brand voice analyzer',
-      instructions: 'instructions',
-      prompt: 'prompt',
-      visibility: 'public',
-    });
   });
 
   // Mock server tests are disabled
