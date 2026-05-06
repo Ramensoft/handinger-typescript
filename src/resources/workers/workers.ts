@@ -26,9 +26,7 @@ export class Workers extends APIResource {
    *
    * @example
    * ```ts
-   * const worker = await client.workers.create({
-   *   title: 'Brand voice analyzer',
-   * });
+   * const worker = await client.workers.create();
    * ```
    */
   create(body: WorkerCreateParams, options?: RequestOptions): APIPromise<WorkerCreateResponse> {
@@ -71,8 +69,6 @@ export class Workers extends APIResource {
 }
 
 export interface CreateWorker {
-  title: string;
-
   /**
    * Persistent system prompt the worker uses for every task it runs.
    */
@@ -83,6 +79,11 @@ export interface CreateWorker {
    * when `instructions` is omitted.
    */
   prompt?: string;
+
+  /**
+   * Optional display name. When omitted, Handinger assigns a random dog-themed name.
+   */
+  title?: string;
 
   /**
    * `public` (default) is visible to all org members. `private` is only visible to
@@ -188,8 +189,6 @@ export interface WorkerCreateResponse {
 export type WorkerRetrieveEmailResponse = string;
 
 export interface WorkerCreateParams {
-  title: string;
-
   /**
    * Persistent system prompt the worker uses for every task it runs.
    */
@@ -200,6 +199,11 @@ export interface WorkerCreateParams {
    * when `instructions` is omitted.
    */
   prompt?: string;
+
+  /**
+   * Optional display name. When omitted, Handinger assigns a random dog-themed name.
+   */
+  title?: string;
 
   /**
    * `public` (default) is visible to all org members. `private` is only visible to
