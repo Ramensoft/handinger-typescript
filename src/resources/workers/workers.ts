@@ -75,6 +75,13 @@ export interface CreateWorker {
   instructions?: string;
 
   /**
+   * Optional JSON Schema (Draft-07) describing the structured object the worker must
+   * produce. When set, every task response is validated against the schema and
+   * exposed as `structuredOutput`.
+   */
+  outputSchema?: { [key: string]: unknown };
+
+  /**
    * Natural-language description of the worker to use for AI-generated instructions
    * when `instructions` is omitted.
    */
@@ -118,6 +125,8 @@ export interface Worker {
   sources: Array<Worker.Source>;
 
   status: 'running' | 'completed' | 'pending';
+
+  structured_output: { [key: string]: unknown } | null;
 
   usage?: Worker.Usage;
 }
@@ -177,6 +186,8 @@ export interface WorkerCreateResponse {
 
   organizationId: string;
 
+  outputSchema: { [key: string]: unknown } | null;
+
   title: string;
 
   updatedAt: string | null;
@@ -195,6 +206,13 @@ export interface WorkerCreateParams {
    * Persistent system prompt the worker uses for every task it runs.
    */
   instructions?: string;
+
+  /**
+   * Optional JSON Schema (Draft-07) describing the structured object the worker must
+   * produce. When set, every task response is validated against the schema and
+   * exposed as `structuredOutput`.
+   */
+  outputSchema?: { [key: string]: unknown };
 
   /**
    * Natural-language description of the worker to use for AI-generated instructions
