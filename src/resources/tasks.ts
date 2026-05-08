@@ -116,6 +116,8 @@ export namespace TaskWithTurns {
 
     status: string;
 
+    structuredOutput: { [key: string]: unknown } | null;
+
     taskId: string;
   }
 }
@@ -130,6 +132,13 @@ export interface TaskCreateParams {
    * Persistent system prompt the worker uses for every task it runs.
    */
   instructions?: string;
+
+  /**
+   * Optional JSON Schema (Draft-07) describing the structured object the worker must
+   * produce. When set, every task response is validated against the schema and
+   * exposed as `structuredOutput`.
+   */
+  outputSchema?: { [key: string]: unknown };
 
   /**
    * Natural-language description of the worker to use for AI-generated instructions
