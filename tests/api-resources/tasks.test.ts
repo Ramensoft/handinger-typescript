@@ -27,6 +27,7 @@ describe('resource tasks', () => {
       instructions: 'instructions',
       outputSchema: { foo: 'bar' },
       prompt: 'prompt',
+      summary: 'summary',
       title: 'Brand voice analyzer',
       visibility: 'public',
     });

@@ -88,6 +88,12 @@ export interface CreateWorker {
   prompt?: string;
 
   /**
+   * Short one-line description of the worker's purpose. Auto-generated when omitted
+   * and a `prompt` is provided.
+   */
+  summary?: string;
+
+  /**
    * Optional display name. When omitted, Handinger assigns a random dog-themed name.
    */
   title?: string;
@@ -188,6 +194,8 @@ export interface WorkerCreateResponse {
 
   outputSchema: { [key: string]: unknown } | null;
 
+  summary: string;
+
   title: string;
 
   updatedAt: string | null;
@@ -219,6 +227,12 @@ export interface WorkerCreateParams {
    * when `instructions` is omitted.
    */
   prompt?: string;
+
+  /**
+   * Short one-line description of the worker's purpose. Auto-generated when omitted
+   * and a `prompt` is provided.
+   */
+  summary?: string;
 
   /**
    * Optional display name. When omitted, Handinger assigns a random dog-themed name.
