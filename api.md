@@ -11,7 +11,7 @@ Methods:
 
 - <code title="post /api/workers">client.workers.<a href="./src/resources/workers/workers.ts">create</a>({ ...params }) -> WorkerCreateResponse</code>
 - <code title="get /api/workers/{workerId}">client.workers.<a href="./src/resources/workers/workers.ts">retrieve</a>(workerID, { ...params }) -> Worker</code>
-- <code title="get /api/workers/{workerId}/email">client.workers.<a href="./src/resources/workers/workers.ts">retrieveEmail</a>(workerID) -> string</code>
+- <code title="get /api/workers/{workerId}/email">client.workers.<a href="./src/resources/workers/workers.ts">retrieveEmail</a>(workerID) -> WorkerRetrieveEmailResponse</code>
 
 ## Schedules
 

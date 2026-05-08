@@ -63,7 +63,7 @@ export class Workers extends APIResource {
    * );
    * ```
    */
-  retrieveEmail(workerID: string, options?: RequestOptions): APIPromise<string> {
+  retrieveEmail(workerID: string, options?: RequestOptions): APIPromise<WorkerRetrieveEmailResponse> {
     return this._client.get(path`/api/workers/${workerID}/email`, options);
   }
 }
@@ -186,7 +186,9 @@ export interface WorkerCreateResponse {
   visibility: 'public' | 'private';
 }
 
-export type WorkerRetrieveEmailResponse = string;
+export interface WorkerRetrieveEmailResponse {
+  email: string;
+}
 
 export interface WorkerCreateParams {
   /**
