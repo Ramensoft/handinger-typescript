@@ -147,6 +147,12 @@ export interface TaskCreateParams {
   prompt?: string;
 
   /**
+   * Short one-line description of the worker's purpose. Auto-generated when omitted
+   * and a `prompt` is provided.
+   */
+  summary?: string;
+
+  /**
    * Optional display name. When omitted, Handinger assigns a random dog-themed name.
    */
   title?: string;
