@@ -19,7 +19,7 @@ export class Tasks extends APIResource {
    * @example
    * ```ts
    * const worker = await client.tasks.create({
-   *   workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
+   *   workerId: 'wrk_vk81XUHKHG-qr4',
    * });
    * ```
    */
@@ -50,6 +50,12 @@ export interface CreateTask extends WorkersAPI.CreateWorker {
    * Worker id the task belongs to.
    */
   workerId: string;
+
+  /**
+   * Optional client-provided task id. Reuse this id to add turns to an existing
+   * task.
+   */
+  taskId?: string;
 }
 
 export interface Task {
@@ -151,6 +157,12 @@ export interface TaskCreateParams {
    * and a `prompt` is provided.
    */
   summary?: string;
+
+  /**
+   * Optional client-provided task id. Reuse this id to add turns to an existing
+   * task.
+   */
+  taskId?: string;
 
   /**
    * Optional display name. When omitted, Handinger assigns a random dog-themed name.
