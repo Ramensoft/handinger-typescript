@@ -11,24 +11,39 @@ import {
   WorkerSchedule,
 } from './schedules';
 import { APIPromise } from '../../core/api-promise';
-import { Stream } from '../../core/streaming';
-import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Create, retrieve, and manage agent worker templates.
+ */
 export class Workers extends APIResource {
   schedules: SchedulesAPI.Schedules = new SchedulesAPI.Schedules(this._client);
 
   /**
-   * Create a new agent worker and start it with the supplied instruction.
+   * Create a new worker. The worker is a reusable agent template; tasks are runs
+   * against this template. Use `POST /tasks` to actually run the agent.
+   *
+   * @example
+   * ```ts
+   * const worker = await client.workers.create();
+   * ```
    */
-  create(body: WorkerCreateParams, options?: RequestOptions): APIPromise<Worker> {
+  create(body: WorkerCreateParams, options?: RequestOptions): APIPromise<WorkerCreateResponse> {
     return this._client.post('/api/workers', { body, ...options });
   }
 
   /**
-   * Retrieve the current worker state. Pass stream=true or request text/event-stream
-   * to subscribe to updates.
+   * Retrieve the current worker state and messages from its most recent task.
+   * Returns a JSON worker object by default, or a server-sent event stream when
+   * `stream=true`.
+   *
+   * @example
+   * ```ts
+   * const worker = await client.workers.retrieve(
+   *   't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
+   * );
+   * ```
    */
   retrieve(
     workerID: string,
@@ -39,54 +54,55 @@ export class Workers extends APIResource {
   }
 
   /**
-   * Send another instruction to an existing worker.
-   */
-  continue(workerID: string, body: WorkerContinueParams, options?: RequestOptions): APIPromise<Worker> {
-    return this._client.post(path`/api/workers/${workerID}`, { body, ...options });
-  }
-
-  /**
    * Retrieve the inbound email address for a worker.
+   *
+   * @example
+   * ```ts
+   * const response = await client.workers.retrieveEmail(
+   *   't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
+   * );
+   * ```
    */
-  retrieveEmail(workerID: string, options?: RequestOptions): APIPromise<string> {
+  retrieveEmail(workerID: string, options?: RequestOptions): APIPromise<WorkerRetrieveEmailResponse> {
     return this._client.get(path`/api/workers/${workerID}/email`, options);
-  }
-
-  /**
-   * Retrieve a file published from a worker workspace. The runtime route accepts
-   * nested paths after /files/.
-   */
-  retrieveFile(
-    filePath: string,
-    params: WorkerRetrieveFileParams,
-    options?: RequestOptions,
-  ): APIPromise<Response> {
-    const { workerId } = params;
-    return this._client.get(path`/api/workers/${workerId}/files/${filePath}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: 'application/octet-stream' }, options?.headers]),
-      __binaryResponse: true,
-    });
-  }
-
-  /**
-   * Subscribe to a worker using server-sent events.
-   */
-  streamUpdates(workerID: string, options?: RequestOptions): APIPromise<Stream<WorkerStreamUpdatesResponse>> {
-    return this._client.get(path`/api/workers/${workerID}/stream`, {
-      ...options,
-      headers: buildHeaders([{ Accept: 'text/event-stream' }, options?.headers]),
-      stream: true,
-    }) as APIPromise<Stream<WorkerStreamUpdatesResponse>>;
   }
 }
 
 export interface CreateWorker {
-  input: string;
+  /**
+   * Persistent system prompt the worker uses for every task it runs.
+   */
+  instructions?: string;
 
-  budget?: 'low' | 'standard' | 'high' | 'unlimited';
+  /**
+   * Optional JSON Schema (Draft-07) describing the structured object the worker must
+   * produce. When set, every task response is validated against the schema and
+   * exposed as `structuredOutput`.
+   */
+  outputSchema?: { [key: string]: unknown };
 
-  stream?: boolean;
+  /**
+   * Natural-language description of the worker to use for AI-generated instructions
+   * when `instructions` is omitted.
+   */
+  prompt?: string;
+
+  /**
+   * Short one-line description of the worker's purpose. Auto-generated when omitted
+   * and a `prompt` is provided.
+   */
+  summary?: string;
+
+  /**
+   * Optional display name. When omitted, Handinger assigns a random dog-themed name.
+   */
+  title?: string;
+
+  /**
+   * `public` (default) is visible to all org members. `private` is only visible to
+   * invited members.
+   */
+  visibility?: 'public' | 'private';
 }
 
 export interface Worker {
@@ -116,7 +132,7 @@ export interface Worker {
 
   status: 'running' | 'completed' | 'pending';
 
-  costs?: Worker.Costs | null;
+  structured_output: { [key: string]: unknown } | null;
 
   usage?: Worker.Usage;
 }
@@ -160,69 +176,83 @@ export namespace Worker {
     url: string;
   }
 
-  export interface Costs {
-    internalCostUsd: number;
-
-    modelCostUsd: number;
-
-    sandboxCostUsd: number;
-
-    toolCostUsd: number;
-  }
-
   export interface Usage {
-    cacheReadTokens: number;
-
-    cacheWriteTokens: number;
-
-    costUsd: number;
-
-    inputTokens: number;
-
-    outputTokens: number;
-
-    reasoningTokens: number;
-
-    steps: number;
-
-    totalTokens: number;
-
     credits?: number;
+
+    durationMs?: number;
   }
 }
 
-export type WorkerRetrieveEmailResponse = string;
+export interface WorkerCreateResponse {
+  id: string;
 
-export type WorkerStreamUpdatesResponse = string;
+  createdAt: string | null;
+
+  instructions: string;
+
+  organizationId: string;
+
+  outputSchema: { [key: string]: unknown } | null;
+
+  summary: string;
+
+  title: string;
+
+  updatedAt: string | null;
+
+  userId: string;
+
+  visibility: 'public' | 'private';
+}
+
+export interface WorkerRetrieveEmailResponse {
+  email: string;
+}
 
 export interface WorkerCreateParams {
-  input: string;
+  /**
+   * Persistent system prompt the worker uses for every task it runs.
+   */
+  instructions?: string;
 
-  budget?: 'low' | 'standard' | 'high' | 'unlimited';
+  /**
+   * Optional JSON Schema (Draft-07) describing the structured object the worker must
+   * produce. When set, every task response is validated against the schema and
+   * exposed as `structuredOutput`.
+   */
+  outputSchema?: { [key: string]: unknown };
 
-  stream?: boolean;
+  /**
+   * Natural-language description of the worker to use for AI-generated instructions
+   * when `instructions` is omitted.
+   */
+  prompt?: string;
+
+  /**
+   * Short one-line description of the worker's purpose. Auto-generated when omitted
+   * and a `prompt` is provided.
+   */
+  summary?: string;
+
+  /**
+   * Optional display name. When omitted, Handinger assigns a random dog-themed name.
+   */
+  title?: string;
+
+  /**
+   * `public` (default) is visible to all org members. `private` is only visible to
+   * invited members.
+   */
+  visibility?: 'public' | 'private';
 }
 
 export interface WorkerRetrieveParams {
   /**
-   * Return a server-sent event stream instead of JSON.
+   * Set to "true" to receive a server-sent event stream that replays all stored
+   * messages and then continues with live chunks from the active task (if any)
+   * before closing.
    */
-  stream?: boolean;
-}
-
-export interface WorkerContinueParams {
-  input: string;
-
-  budget?: 'low' | 'standard' | 'high' | 'unlimited';
-
-  stream?: boolean;
-}
-
-export interface WorkerRetrieveFileParams {
-  /**
-   * Worker id returned by the create worker endpoint.
-   */
-  workerId: string;
+  stream?: 'true' | 'false';
 }
 
 Workers.Schedules = Schedules;
@@ -231,12 +261,10 @@ export declare namespace Workers {
   export {
     type CreateWorker as CreateWorker,
     type Worker as Worker,
+    type WorkerCreateResponse as WorkerCreateResponse,
     type WorkerRetrieveEmailResponse as WorkerRetrieveEmailResponse,
-    type WorkerStreamUpdatesResponse as WorkerStreamUpdatesResponse,
     type WorkerCreateParams as WorkerCreateParams,
     type WorkerRetrieveParams as WorkerRetrieveParams,
-    type WorkerContinueParams as WorkerContinueParams,
-    type WorkerRetrieveFileParams as WorkerRetrieveFileParams,
   };
 
   export {
