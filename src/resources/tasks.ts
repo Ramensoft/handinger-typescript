@@ -19,13 +19,12 @@ export class Tasks extends APIResource {
    *
    * @example
    * ```ts
-   * const worker = await client.tasks.create();
+   * const worker = await client.tasks.create({
+   *   input: "What's the weather today in Barcelona?",
+   * });
    * ```
    */
-  create(
-    body: TaskCreateParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<WorkersAPI.Worker> {
+  create(body: TaskCreateParams, options?: RequestOptions): APIPromise<WorkersAPI.Worker> {
     return this._client.post(
       '/api/tasks',
       maybeMultipartFormRequestOptions({ body, ...options }, this._client),
@@ -62,7 +61,13 @@ export class Tasks extends APIResource {
   }
 }
 
-export interface CreateTask extends WorkersAPI.CreateWorker {
+export interface CreateTask {
+  input: string;
+
+  budget?: 'low' | 'standard' | 'high' | 'unlimited';
+
+  stream?: boolean;
+
   /**
    * Optional client-provided task id. Reuse this id to add turns to an existing
    * task.
@@ -156,46 +161,17 @@ export namespace TaskWithTurns {
 }
 
 export interface TaskCreateParams {
-  /**
-   * Persistent system prompt the worker uses for every task it runs.
-   */
-  instructions?: string;
+  input: string;
 
-  /**
-   * Optional JSON Schema (Draft-07) describing the structured object the worker must
-   * produce. When set, every task response is validated against the schema and
-   * exposed as `structuredOutput`.
-   */
-  outputSchema?: { [key: string]: unknown };
+  budget?: 'low' | 'standard' | 'high' | 'unlimited';
 
-  /**
-   * Natural-language description of the worker to use for AI-generated instructions
-   * when `instructions` is omitted.
-   */
-  prompt?: string;
-
-  /**
-   * Short one-line description of the worker's purpose. Auto-generated when omitted
-   * and a `prompt` is provided.
-   */
-  summary?: string;
+  stream?: boolean;
 
   /**
    * Optional client-provided task id. Reuse this id to add turns to an existing
    * task.
    */
   taskId?: string;
-
-  /**
-   * Optional display name. When omitted, Handinger assigns a random dog-themed name.
-   */
-  title?: string;
-
-  /**
-   * `public` (default) is visible to all org members. `private` is only visible to
-   * invited members.
-   */
-  visibility?: 'public' | 'private';
 
   /**
    * Worker id the task belongs to. If omitted, a new worker is created on-the-fly

@@ -9,8 +9,8 @@ const client = new Handinger({
 
 describe('resource tasks', () => {
   // Mock server tests are disabled
-  test.skip('create', async () => {
-    const responsePromise = client.tasks.create();
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.tasks.create({ input: "What's the weather today in Barcelona?" });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,23 +21,14 @@ describe('resource tasks', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('create: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.tasks.create(
-        {
-          instructions: 'instructions',
-          outputSchema: { foo: 'bar' },
-          prompt: 'prompt',
-          summary: 'summary',
-          taskId: 'tsk_2Z-YWz3hFq6VlW',
-          title: 'Brand voice analyzer',
-          visibility: 'public',
-          workerId: 'wrk_vk81XUHKHG-qr4',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Handinger.NotFoundError);
+  test.skip('create: required and optional params', async () => {
+    const response = await client.tasks.create({
+      input: "What's the weather today in Barcelona?",
+      budget: 'low',
+      stream: true,
+      taskId: 'tsk_2Z-YWz3hFq6VlW',
+      workerId: 'wrk_vk81XUHKHG-qr4',
+    });
   });
 
   // Mock server tests are disabled
