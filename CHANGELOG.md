@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.0 (2026-05-11)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/ramensoft/handinger-typescript/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** api update ([45db89c](https://github.com/ramensoft/handinger-typescript/commit/45db89cf5f8803252d413d749dfb343e10920993))
+
 ## 0.6.0 (2026-05-11)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/Ramensoft/handinger-typescript/compare/v0.5.0...v0.6.0)
