@@ -37,7 +37,10 @@ export class Workers extends APIResource {
    *
    * @example
    * ```ts
-   * const workerTemplate = await client.workers.create();
+   * const workerTemplate = await client.workers.create({
+   *   prompt:
+   *     'A worker that fact-checks short claims and returns a verdict with citations.',
+   * });
    * ```
    */
   create(body: WorkerCreateParams, options?: RequestOptions): APIPromise<WorkerTemplate> {
@@ -73,6 +76,7 @@ export class Workers extends APIResource {
    * ```ts
    * const workerTemplate = await client.workers.update(
    *   't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
+   *   { title: 'Claim verdict v2' },
    * );
    * ```
    */
