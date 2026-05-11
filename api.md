@@ -31,6 +31,23 @@ Methods:
 - <code title="get /api/workers/{workerId}/schedules">client.workers.schedules.<a href="./src/resources/workers/schedules.ts">list</a>(workerID) -> ScheduleListResponse</code>
 - <code title="delete /api/workers/{workerId}/schedules/{scheduleId}">client.workers.schedules.<a href="./src/resources/workers/schedules.ts">cancel</a>(scheduleID, { ...params }) -> ScheduleCancelResponse</code>
 
+## Webhooks
+
+Types:
+
+- <code><a href="./src/resources/workers/webhooks.ts">UpdateWebhook</a></code>
+- <code><a href="./src/resources/workers/webhooks.ts">Webhook</a></code>
+- <code><a href="./src/resources/workers/webhooks.ts">WebhookExecution</a></code>
+- <code><a href="./src/resources/workers/webhooks.ts">WebhookExecutionList</a></code>
+
+Methods:
+
+- <code title="get /api/workers/{workerId}/webhook">client.workers.webhooks.<a href="./src/resources/workers/webhooks.ts">retrieve</a>(workerID) -> Webhook</code>
+- <code title="put /api/workers/{workerId}/webhook">client.workers.webhooks.<a href="./src/resources/workers/webhooks.ts">update</a>(workerID, { ...params }) -> Webhook</code>
+- <code title="delete /api/workers/{workerId}/webhook">client.workers.webhooks.<a href="./src/resources/workers/webhooks.ts">delete</a>(workerID) -> Webhook</code>
+- <code title="get /api/workers/{workerId}/webhook/executions">client.workers.webhooks.<a href="./src/resources/workers/webhooks.ts">listExecutions</a>(workerID, { ...params }) -> WebhookExecutionList</code>
+- <code title="post /api/workers/{workerId}/webhook/regenerate-token">client.workers.webhooks.<a href="./src/resources/workers/webhooks.ts">regenerateToken</a>(workerID) -> Webhook</code>
+
 # Tasks
 
 Types:
