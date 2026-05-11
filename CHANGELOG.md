@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.2 (2026-05-11)
+
+Full Changelog: [v0.7.1...v0.7.2](https://github.com/ramensoft/handinger-typescript/compare/v0.7.1...v0.7.2)
+
+### Chores
+
+* configure new SDK language ([09d242e](https://github.com/ramensoft/handinger-typescript/commit/09d242eee22199e1769ad5e3d2e2f5bb94a3fb05))
+
 ## 0.7.1 (2026-05-11)
 
 Full Changelog: [v0.7.0...v0.7.1](https://github.com/ramensoft/handinger-typescript/compare/v0.7.0...v0.7.1)
