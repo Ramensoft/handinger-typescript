@@ -28,7 +28,7 @@ export const newMcpServer = async ({
   new McpServer(
     {
       name: 'ramensoft_handinger_api',
-      version: '0.7.4',
+      version: '0.7.5',
     },
     {
       instructions: await getInstructions({ stainlessApiKey, customInstructionsPath }),

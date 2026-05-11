@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.5 (2026-05-11)
+
+Full Changelog: [v0.7.4...v0.7.5](https://github.com/ramensoft/handinger-typescript/compare/v0.7.4...v0.7.5)
+
+### Chores
+
+* update SDK settings ([5e32009](https://github.com/ramensoft/handinger-typescript/commit/5e32009a568f200108be17e1901f3a237f95aa8a))
+
 ## 0.7.4 (2026-05-11)
 
 Full Changelog: [v0.7.3...v0.7.4](https://github.com/ramensoft/handinger-typescript/compare/v0.7.3...v0.7.4)
