@@ -200,6 +200,11 @@ export interface Worker {
 
   structured_output: { [key: string]: unknown } | null;
 
+  /**
+   * Web URL of the worker in the Handinger dashboard.
+   */
+  url: string;
+
   usage?: Worker.Usage;
 }
 
@@ -265,6 +270,11 @@ export interface WorkerTemplate {
   title: string;
 
   updatedAt: string | null;
+
+  /**
+   * Web URL of the worker in the Handinger dashboard.
+   */
+  url: string;
 
   userId: string;
 

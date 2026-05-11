@@ -97,6 +97,11 @@ export interface Task {
 
   triggeredBy: 'api' | 'email' | 'schedule' | 'ui';
 
+  /**
+   * Web URL of the task in the Handinger dashboard.
+   */
+  url: string;
+
   workerId: string;
 }
 
