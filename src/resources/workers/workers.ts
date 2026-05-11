@@ -10,6 +10,16 @@ import {
   Schedules,
   WorkerSchedule,
 } from './schedules';
+import * as WebhooksAPI from './webhooks';
+import {
+  UpdateWebhook,
+  Webhook,
+  WebhookExecution,
+  WebhookExecutionList,
+  WebhookListExecutionsParams,
+  WebhookUpdateParams,
+  Webhooks,
+} from './webhooks';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -19,6 +29,7 @@ import { path } from '../../internal/utils/path';
  */
 export class Workers extends APIResource {
   schedules: SchedulesAPI.Schedules = new SchedulesAPI.Schedules(this._client);
+  webhooks: WebhooksAPI.Webhooks = new WebhooksAPI.Webhooks(this._client);
 
   /**
    * Create a new worker. The worker is a reusable agent template; tasks are runs
@@ -362,6 +373,7 @@ export interface WorkerUpdateParams {
 }
 
 Workers.Schedules = Schedules;
+Workers.Webhooks = Webhooks;
 
 export declare namespace Workers {
   export {
@@ -383,5 +395,15 @@ export declare namespace Workers {
     type ScheduleCancelResponse as ScheduleCancelResponse,
     type ScheduleCreateParams as ScheduleCreateParams,
     type ScheduleCancelParams as ScheduleCancelParams,
+  };
+
+  export {
+    Webhooks as Webhooks,
+    type UpdateWebhook as UpdateWebhook,
+    type Webhook as Webhook,
+    type WebhookExecution as WebhookExecution,
+    type WebhookExecutionList as WebhookExecutionList,
+    type WebhookUpdateParams as WebhookUpdateParams,
+    type WebhookListExecutionsParams as WebhookListExecutionsParams,
   };
 }

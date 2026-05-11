@@ -9,6 +9,15 @@ export {
   type ScheduleCancelParams,
 } from './schedules';
 export {
+  Webhooks,
+  type UpdateWebhook,
+  type Webhook,
+  type WebhookExecution,
+  type WebhookExecutionList,
+  type WebhookUpdateParams,
+  type WebhookListExecutionsParams,
+} from './webhooks';
+export {
   Workers,
   type CreateWorker,
   type DeleteWorkerResponse,
