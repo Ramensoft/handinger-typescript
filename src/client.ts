@@ -17,14 +17,24 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { CreateTask, Task, TaskCreateParams, TaskWithTurns, Tasks } from './resources/tasks';
+import {
+  CreateTask,
+  DeleteTaskResponse,
+  Task,
+  TaskCreateParams,
+  TaskWithTurns,
+  Tasks,
+} from './resources/tasks';
 import {
   CreateWorker,
+  DeleteWorkerResponse,
+  UpdateWorker,
   Worker,
   WorkerCreateParams,
-  WorkerCreateResponse,
   WorkerRetrieveEmailResponse,
   WorkerRetrieveParams,
+  WorkerTemplate,
+  WorkerUpdateParams,
   Workers,
 } from './resources/workers/workers';
 import { type Fetch } from './internal/builtin-types';
@@ -758,16 +768,20 @@ export declare namespace Handinger {
   export {
     Workers as Workers,
     type CreateWorker as CreateWorker,
+    type DeleteWorkerResponse as DeleteWorkerResponse,
+    type UpdateWorker as UpdateWorker,
     type Worker as Worker,
-    type WorkerCreateResponse as WorkerCreateResponse,
+    type WorkerTemplate as WorkerTemplate,
     type WorkerRetrieveEmailResponse as WorkerRetrieveEmailResponse,
     type WorkerCreateParams as WorkerCreateParams,
     type WorkerRetrieveParams as WorkerRetrieveParams,
+    type WorkerUpdateParams as WorkerUpdateParams,
   };
 
   export {
     Tasks as Tasks,
     type CreateTask as CreateTask,
+    type DeleteTaskResponse as DeleteTaskResponse,
     type Task as Task,
     type TaskWithTurns as TaskWithTurns,
     type TaskCreateParams as TaskCreateParams,

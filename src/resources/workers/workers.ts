@@ -26,10 +26,10 @@ export class Workers extends APIResource {
    *
    * @example
    * ```ts
-   * const worker = await client.workers.create();
+   * const workerTemplate = await client.workers.create();
    * ```
    */
-  create(body: WorkerCreateParams, options?: RequestOptions): APIPromise<WorkerCreateResponse> {
+  create(body: WorkerCreateParams, options?: RequestOptions): APIPromise<WorkerTemplate> {
     return this._client.post('/api/workers', { body, ...options });
   }
 
@@ -51,6 +51,38 @@ export class Workers extends APIResource {
     options?: RequestOptions,
   ): APIPromise<Worker> {
     return this._client.get(path`/api/workers/${workerID}`, { query, ...options });
+  }
+
+  /**
+   * Update a worker's instructions, title, summary, visibility, or output schema.
+   * Only the fields you send are changed; omitted fields keep their current values.
+   * Only the worker creator can update a worker.
+   *
+   * @example
+   * ```ts
+   * const workerTemplate = await client.workers.update(
+   *   't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
+   * );
+   * ```
+   */
+  update(workerID: string, body: WorkerUpdateParams, options?: RequestOptions): APIPromise<WorkerTemplate> {
+    return this._client.patch(path`/api/workers/${workerID}`, { body, ...options });
+  }
+
+  /**
+   * Permanently delete a worker template along with its tasks, turns, files,
+   * schedules, and integrations. This action is not reversible. Only the worker
+   * creator can delete a worker.
+   *
+   * @example
+   * ```ts
+   * const deleteWorkerResponse = await client.workers.delete(
+   *   't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM',
+   * );
+   * ```
+   */
+  delete(workerID: string, options?: RequestOptions): APIPromise<DeleteWorkerResponse> {
+    return this._client.delete(path`/api/workers/${workerID}`, options);
   }
 
   /**
@@ -101,6 +133,40 @@ export interface CreateWorker {
   /**
    * `public` (default) is visible to all org members. `private` is only visible to
    * invited members.
+   */
+  visibility?: 'public' | 'private';
+}
+
+export interface DeleteWorkerResponse {
+  deleted: boolean;
+}
+
+export interface UpdateWorker {
+  /**
+   * Replaces the persistent system prompt. Subsequent tasks pick up the new
+   * instructions immediately; in-flight tasks keep using the previous version.
+   */
+  instructions?: string;
+
+  /**
+   * Replace the worker's structured output schema. Pass `null` to clear it and
+   * return to free-form text responses.
+   */
+  outputSchema?: { [key: string]: unknown } | null;
+
+  /**
+   * Replaces the worker's short one-line summary.
+   */
+  summary?: string;
+
+  /**
+   * New display name for the worker.
+   */
+  title?: string;
+
+  /**
+   * Change visibility between `public` (any org member can run tasks) and `private`
+   * (only invited members).
    */
   visibility?: 'public' | 'private';
 }
@@ -183,7 +249,7 @@ export namespace Worker {
   }
 }
 
-export interface WorkerCreateResponse {
+export interface WorkerTemplate {
   id: string;
 
   createdAt: string | null;
@@ -255,16 +321,49 @@ export interface WorkerRetrieveParams {
   stream?: 'true' | 'false';
 }
 
+export interface WorkerUpdateParams {
+  /**
+   * Replaces the persistent system prompt. Subsequent tasks pick up the new
+   * instructions immediately; in-flight tasks keep using the previous version.
+   */
+  instructions?: string;
+
+  /**
+   * Replace the worker's structured output schema. Pass `null` to clear it and
+   * return to free-form text responses.
+   */
+  outputSchema?: { [key: string]: unknown } | null;
+
+  /**
+   * Replaces the worker's short one-line summary.
+   */
+  summary?: string;
+
+  /**
+   * New display name for the worker.
+   */
+  title?: string;
+
+  /**
+   * Change visibility between `public` (any org member can run tasks) and `private`
+   * (only invited members).
+   */
+  visibility?: 'public' | 'private';
+}
+
 Workers.Schedules = Schedules;
 
 export declare namespace Workers {
   export {
     type CreateWorker as CreateWorker,
+    type DeleteWorkerResponse as DeleteWorkerResponse,
+    type UpdateWorker as UpdateWorker,
     type Worker as Worker,
-    type WorkerCreateResponse as WorkerCreateResponse,
+    type WorkerTemplate as WorkerTemplate,
     type WorkerRetrieveEmailResponse as WorkerRetrieveEmailResponse,
     type WorkerCreateParams as WorkerCreateParams,
     type WorkerRetrieveParams as WorkerRetrieveParams,
+    type WorkerUpdateParams as WorkerUpdateParams,
   };
 
   export {
