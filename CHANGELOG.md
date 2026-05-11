@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0 (2026-05-11)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/Ramensoft/handinger-typescript/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* Duplicate workers ([489681f](https://github.com/Ramensoft/handinger-typescript/commit/489681f34b3cdea4b740f5860ebfef678e8ca670))
+
 ## 0.3.0 (2026-05-11)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/Ramensoft/handinger-typescript/compare/v0.2.0...v0.3.0)
