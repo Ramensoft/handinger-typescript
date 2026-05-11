@@ -21,6 +21,7 @@ export class Tasks extends APIResource {
    * ```ts
    * const worker = await client.tasks.create({
    *   input: "What's the weather today in Barcelona?",
+   *   workerId: 'wrk_vk81XUHKHG-qr4',
    * });
    * ```
    */
