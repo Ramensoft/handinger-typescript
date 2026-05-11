@@ -70,9 +70,9 @@ export class Workers extends APIResource {
   }
 
   /**
-   * Permanently delete a worker template along with its tasks, turns, files,
-   * schedules, and integrations. This action is not reversible. Only the worker
-   * creator can delete a worker.
+   * Soft-delete a worker template so it no longer appears in list or retrieve
+   * endpoints. Tasks, turns, files, schedules, and integrations remain in the
+   * database for analytics. Only the worker creator can delete a worker.
    *
    * @example
    * ```ts
