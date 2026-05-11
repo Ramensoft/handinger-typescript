@@ -12,9 +12,10 @@ import { path } from '../internal/utils/path';
  */
 export class Tasks extends APIResource {
   /**
-   * Run a new task against an existing worker. Send `multipart/form-data` to attach
-   * files; the bytes are bootstrapped into the worker's workspace before the task
-   * starts.
+   * Run a new task against an existing worker. Send a `taskId` of a prior task to
+   * add a follow-up turn instead of starting a fresh task. Send
+   * `multipart/form-data` to attach files; the bytes are bootstrapped into the
+   * worker's workspace before the task starts.
    *
    * @example
    * ```ts
@@ -43,6 +44,21 @@ export class Tasks extends APIResource {
   retrieve(taskID: string, options?: RequestOptions): APIPromise<TaskWithTurns> {
     return this._client.get(path`/api/tasks/${taskID}`, options);
   }
+
+  /**
+   * Archive a task so it stops appearing in `GET /tasks` results. Turns and files
+   * are retained for audit purposes. Only the worker creator can archive a task.
+   *
+   * @example
+   * ```ts
+   * const deleteTaskResponse = await client.tasks.delete(
+   *   'tsk_01HZY31W2SZJ8MJ2FQTR3M1K9D',
+   * );
+   * ```
+   */
+  delete(taskID: string, options?: RequestOptions): APIPromise<DeleteTaskResponse> {
+    return this._client.delete(path`/api/tasks/${taskID}`, options);
+  }
 }
 
 export interface CreateTask extends WorkersAPI.CreateWorker {
@@ -56,6 +72,10 @@ export interface CreateTask extends WorkersAPI.CreateWorker {
    * task.
    */
   taskId?: string;
+}
+
+export interface DeleteTaskResponse {
+  archived: boolean;
 }
 
 export interface Task {
@@ -179,6 +199,7 @@ export interface TaskCreateParams {
 export declare namespace Tasks {
   export {
     type CreateTask as CreateTask,
+    type DeleteTaskResponse as DeleteTaskResponse,
     type Task as Task,
     type TaskWithTurns as TaskWithTurns,
     type TaskCreateParams as TaskCreateParams,

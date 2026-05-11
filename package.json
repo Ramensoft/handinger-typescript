@@ -2,7 +2,7 @@
   "name": "@ramensoft/handinger",
   "version": "0.1.0",
   "description": "The official TypeScript library for the Handinger API",
-  "author": "Handinger <>",
+  "author": "Handinger <support@handinger.com>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",

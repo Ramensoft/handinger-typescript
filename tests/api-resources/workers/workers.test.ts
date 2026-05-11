@@ -45,6 +45,30 @@ describe('resource workers', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('update', async () => {
+    const responsePromise = client.workers.update('t_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM', {});
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('delete', async () => {
+    const responsePromise = client.workers.delete('t_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
   test.skip('retrieveEmail', async () => {
     const responsePromise = client.workers.retrieveEmail('t_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM');
     const rawResponse = await responsePromise.asResponse();
