@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.0 (2026-05-11)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/Ramensoft/handinger-typescript/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* Add Webhook API docs ([7bb887a](https://github.com/Ramensoft/handinger-typescript/commit/7bb887a1d06b7d347eb186a36e6b111f30134350))
+
 ## 0.5.0 (2026-05-11)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/Ramensoft/handinger-typescript/compare/v0.4.0...v0.5.0)
