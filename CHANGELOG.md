@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 (2026-05-11)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/Ramensoft/handinger-typescript/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* Add update and delete endpoints for workers and tasks ([e3dcd6a](https://github.com/Ramensoft/handinger-typescript/commit/e3dcd6ad461b11c64a60d0edb7d0b5a70f3a540e))
+
 ## 0.1.0 (2026-05-09)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/Ramensoft/handinger-typescript/compare/v0.0.1...v0.1.0)
