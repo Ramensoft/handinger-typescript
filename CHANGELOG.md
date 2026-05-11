@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.0 (2026-05-11)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/Ramensoft/handinger-typescript/compare/v0.4.0...v0.5.0)
+
+### Features
+
+* Fix OpenAPI schema definitions for proper type handling ([3777318](https://github.com/Ramensoft/handinger-typescript/commit/377731801472fdd6adae3863f48764724edbfaf2))
+
 ## 0.4.0 (2026-05-11)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/Ramensoft/handinger-typescript/compare/v0.3.0...v0.4.0)
