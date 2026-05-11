@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0 (2026-05-11)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/Ramensoft/handinger-typescript/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* Add worker and task url ([e4b05c7](https://github.com/Ramensoft/handinger-typescript/commit/e4b05c70c3706c9ab3158a583ada44bac546da71))
+
 ## 0.2.0 (2026-05-11)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/Ramensoft/handinger-typescript/compare/v0.1.0...v0.2.0)
