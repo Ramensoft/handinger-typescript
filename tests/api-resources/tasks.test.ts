@@ -24,8 +24,8 @@ describe('resource tasks', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.tasks.create({
       input: "What's the weather today in Barcelona?",
-      budget: 'low',
-      stream: true,
+      budget: 'standard',
+      stream: false,
       taskId: 'tsk_2Z-YWz3hFq6VlW',
       workerId: 'wrk_vk81XUHKHG-qr4',
     });
