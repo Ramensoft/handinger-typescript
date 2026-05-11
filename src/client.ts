@@ -147,7 +147,7 @@ export class Handinger {
    * API Client for interfacing with the Handinger API.
    *
    * @param {string | undefined} [opts.apiKey=process.env['HANDINGER_API_KEY'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['HANDINGER_BASE_URL'] ?? https://v3.handinger.com] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['HANDINGER_BASE_URL'] ?? https://handinger.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -169,7 +169,7 @@ export class Handinger {
     const options: ClientOptions = {
       apiKey,
       ...opts,
-      baseURL: baseURL || `https://v3.handinger.com`,
+      baseURL: baseURL || `https://handinger.com`,
     };
 
     this.baseURL = options.baseURL!;
@@ -227,7 +227,7 @@ export class Handinger {
    * Check whether the base URL is set to its default.
    */
   #baseURLOverridden(): boolean {
-    return this.baseURL !== 'https://v3.handinger.com';
+    return this.baseURL !== 'https://handinger.com';
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {

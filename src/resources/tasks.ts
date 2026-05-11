@@ -19,12 +19,13 @@ export class Tasks extends APIResource {
    *
    * @example
    * ```ts
-   * const worker = await client.tasks.create({
-   *   workerId: 'wrk_vk81XUHKHG-qr4',
-   * });
+   * const worker = await client.tasks.create();
    * ```
    */
-  create(body: TaskCreateParams, options?: RequestOptions): APIPromise<WorkersAPI.Worker> {
+  create(
+    body: TaskCreateParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<WorkersAPI.Worker> {
     return this._client.post(
       '/api/tasks',
       maybeMultipartFormRequestOptions({ body, ...options }, this._client),
@@ -63,15 +64,16 @@ export class Tasks extends APIResource {
 
 export interface CreateTask extends WorkersAPI.CreateWorker {
   /**
-   * Worker id the task belongs to.
-   */
-  workerId: string;
-
-  /**
    * Optional client-provided task id. Reuse this id to add turns to an existing
    * task.
    */
   taskId?: string;
+
+  /**
+   * Worker id the task belongs to. If omitted, a new worker is created on-the-fly
+   * using the input as instructions.
+   */
+  workerId?: string;
 }
 
 export interface DeleteTaskResponse {
@@ -155,11 +157,6 @@ export namespace TaskWithTurns {
 
 export interface TaskCreateParams {
   /**
-   * Worker id the task belongs to.
-   */
-  workerId: string;
-
-  /**
    * Persistent system prompt the worker uses for every task it runs.
    */
   instructions?: string;
@@ -199,6 +196,12 @@ export interface TaskCreateParams {
    * invited members.
    */
   visibility?: 'public' | 'private';
+
+  /**
+   * Worker id the task belongs to. If omitted, a new worker is created on-the-fly
+   * using the input as instructions.
+   */
+  workerId?: string;
 }
 
 export declare namespace Tasks {
