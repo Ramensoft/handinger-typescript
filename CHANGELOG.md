@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.8.0 (2026-05-11)
+
+Full Changelog: [v0.7.5...v0.8.0](https://github.com/ramensoft/handinger-typescript/compare/v0.7.5...v0.8.0)
+
+### Features
+
+* **api:** api update ([5a85ed3](https://github.com/ramensoft/handinger-typescript/commit/5a85ed33451a1f7a53e1bf9e7dd3edc1e855593a))
+
+
+### Chores
+
+* remove custom code ([e5517b6](https://github.com/ramensoft/handinger-typescript/commit/e5517b6854781a8ed8228df94fc8a3b0be62ba46))
+* update SDK settings ([c0ad210](https://github.com/ramensoft/handinger-typescript/commit/c0ad210a94efa046b31d51de0497f6facb34f43e))
+
 ## 0.7.5 (2026-05-11)
 
 Full Changelog: [v0.7.4...v0.7.5](https://github.com/ramensoft/handinger-typescript/compare/v0.7.4...v0.7.5)
