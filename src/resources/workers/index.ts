@@ -11,9 +11,12 @@ export {
 export {
   Workers,
   type CreateWorker,
+  type DeleteWorkerResponse,
+  type UpdateWorker,
   type Worker,
-  type WorkerCreateResponse,
+  type WorkerTemplate,
   type WorkerRetrieveEmailResponse,
   type WorkerCreateParams,
   type WorkerRetrieveParams,
+  type WorkerUpdateParams,
 } from './workers';

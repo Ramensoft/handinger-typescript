@@ -4,7 +4,7 @@
 
 This library provides convenient access to the Handinger REST API from server-side TypeScript or JavaScript.
 
-The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [docs.handinger.com](https://docs.handinger.com). The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainless.com/).
 
@@ -26,7 +26,7 @@ const client = new Handinger({
   apiKey: process.env['HANDINGER_API_KEY'], // This is the default and can be omitted
 });
 
-const worker = await client.tasks.create({ workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM' });
+const worker = await client.tasks.create({ workerId: 'wrk_vk81XUHKHG-qr4' });
 
 console.log(worker.id);
 ```
@@ -43,7 +43,7 @@ const client = new Handinger({
   apiKey: process.env['HANDINGER_API_KEY'], // This is the default and can be omitted
 });
 
-const params: Handinger.TaskCreateParams = { workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM' };
+const params: Handinger.TaskCreateParams = { workerId: 'wrk_vk81XUHKHG-qr4' };
 const worker: Handinger.Worker = await client.tasks.create(params);
 ```
 
@@ -57,17 +57,15 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const worker = await client.tasks
-  .create({ workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM' })
-  .catch(async (err) => {
-    if (err instanceof Handinger.APIError) {
-      console.log(err.status); // 400
-      console.log(err.name); // BadRequestError
-      console.log(err.headers); // {server: 'nginx', ...}
-    } else {
-      throw err;
-    }
-  });
+const worker = await client.tasks.create({ workerId: 'wrk_vk81XUHKHG-qr4' }).catch(async (err) => {
+  if (err instanceof Handinger.APIError) {
+    console.log(err.status); // 400
+    console.log(err.name); // BadRequestError
+    console.log(err.headers); // {server: 'nginx', ...}
+  } else {
+    throw err;
+  }
+});
 ```
 
 Error codes are as follows:
@@ -99,7 +97,7 @@ const client = new Handinger({
 });
 
 // Or, configure per-request:
-await client.tasks.create({ workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM' }, {
+await client.tasks.create({ workerId: 'wrk_vk81XUHKHG-qr4' }, {
   maxRetries: 5,
 });
 ```
@@ -116,7 +114,7 @@ const client = new Handinger({
 });
 
 // Override per-request:
-await client.tasks.create({ workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM' }, {
+await client.tasks.create({ workerId: 'wrk_vk81XUHKHG-qr4' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -139,14 +137,12 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Handinger();
 
-const response = await client.tasks
-  .create({ workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM' })
-  .asResponse();
+const response = await client.tasks.create({ workerId: 'wrk_vk81XUHKHG-qr4' }).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: worker, response: raw } = await client.tasks
-  .create({ workerId: 't_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM' })
+  .create({ workerId: 'wrk_vk81XUHKHG-qr4' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(worker.id);
