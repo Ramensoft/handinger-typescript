@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.1 (2026-05-11)
+
+Full Changelog: [v0.7.0...v0.7.1](https://github.com/ramensoft/handinger-typescript/compare/v0.7.0...v0.7.1)
+
+### Documentation
+
+* **api:** add parameter and field descriptions to tasks ([4aee819](https://github.com/ramensoft/handinger-typescript/commit/4aee819b20036845c32ef0462b97df290af1333a))
+
 ## 0.7.0 (2026-05-11)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/ramensoft/handinger-typescript/compare/v0.6.0...v0.7.0)
