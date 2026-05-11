@@ -64,8 +64,16 @@ export class Tasks extends APIResource {
 export interface CreateTask {
   input: string;
 
+  /**
+   * Compute budget the worker is allowed to spend on the task. Defaults to
+   * `standard`.
+   */
   budget?: 'low' | 'standard' | 'high' | 'unlimited';
 
+  /**
+   * Stream the response as server-sent events instead of waiting for the final
+   * payload.
+   */
   stream?: boolean;
 
   /**
@@ -100,6 +108,9 @@ export interface Task {
 
   title: string;
 
+  /**
+   * Aggregate credit spend, elapsed wall-clock, and number of turns across the task.
+   */
   totals: Task.Totals;
 
   triggeredBy: 'api' | 'email' | 'schedule' | 'ui';
@@ -113,6 +124,9 @@ export interface Task {
 }
 
 export namespace Task {
+  /**
+   * Aggregate credit spend, elapsed wall-clock, and number of turns across the task.
+   */
   export interface Totals {
     credits: number;
 
@@ -154,6 +168,10 @@ export namespace TaskWithTurns {
 
     status: string;
 
+    /**
+     * Structured JSON payload when the worker is configured with an output schema.
+     * `null` otherwise.
+     */
     structuredOutput: { [key: string]: unknown } | null;
 
     taskId: string;
@@ -163,8 +181,16 @@ export namespace TaskWithTurns {
 export interface TaskCreateParams {
   input: string;
 
+  /**
+   * Compute budget the worker is allowed to spend on the task. Defaults to
+   * `standard`.
+   */
   budget?: 'low' | 'standard' | 'high' | 'unlimited';
 
+  /**
+   * Stream the response as server-sent events instead of waiting for the final
+   * payload.
+   */
   stream?: boolean;
 
   /**
