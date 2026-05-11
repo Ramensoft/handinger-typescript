@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.3 (2026-05-11)
+
+Full Changelog: [v0.7.2...v0.7.3](https://github.com/ramensoft/handinger-typescript/compare/v0.7.2...v0.7.3)
+
+### Chores
+
+* **internal:** version bump ([9107ea3](https://github.com/ramensoft/handinger-typescript/commit/9107ea3065f67ac2332b860b21622749c2192540))
+
 ## 0.7.2 (2026-05-11)
 
 Full Changelog: [v0.7.1...v0.7.2](https://github.com/ramensoft/handinger-typescript/compare/v0.7.1...v0.7.2)
