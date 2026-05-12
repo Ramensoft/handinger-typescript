@@ -12,7 +12,7 @@ describe('resource schedules', () => {
   test.skip('create: only required params', async () => {
     const responsePromise = client.workers.schedules.create('t_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM', {
       input: 'x',
-      when: { date: '2019-12-27T18:11:19.117Z', type: 'scheduled' },
+      when: { date: 'x', type: 'scheduled' },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -27,7 +27,7 @@ describe('resource schedules', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.workers.schedules.create('t_org_123_w_01HZY2ZJQ8G7K42W2D7WF6V4GM', {
       input: 'x',
-      when: { date: '2019-12-27T18:11:19.117Z', type: 'scheduled' },
+      when: { date: 'x', type: 'scheduled' },
       budget: 'low',
     });
   });
