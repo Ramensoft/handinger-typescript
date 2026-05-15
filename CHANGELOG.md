@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.10.0 (2026-05-15)
+
+Full Changelog: [v0.9.0...v0.10.0](https://github.com/ramensoft/handinger-typescript/compare/v0.9.0...v0.10.0)
+
+### Features
+
+* **api:** add size field to Worker.Attachment ([f18c014](https://github.com/ramensoft/handinger-typescript/commit/f18c0145b7ab12f4eb954ecea5096b78c4fe7e3e))
+
 ## 0.9.0 (2026-05-12)
 
 Full Changelog: [v0.8.0...v0.9.0](https://github.com/ramensoft/handinger-typescript/compare/v0.8.0...v0.9.0)
