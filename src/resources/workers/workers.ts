@@ -230,6 +230,8 @@ export namespace Worker {
     mediaType: string;
 
     url: string;
+
+    size?: number;
   }
 
   export interface Output {
